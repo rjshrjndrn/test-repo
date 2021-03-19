@@ -1,0 +1,21 @@
+# This action will push the chalice changes to aws
+on:
+  push:
+    branches:
+    - staging
+
+name: test
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    container: python:3.6-slim
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        # We need to diff with old commit 
+        # to see which workers got changed.
+        fetch-depth: 2
+        ref: staging
